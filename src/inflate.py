@@ -1,3 +1,5 @@
+import torch
+
 def inflate_conv(conv2d,
                  time_dim=3,
                  time_padding=0,
@@ -29,7 +31,7 @@ def inflate_conv(conv2d,
         weight_3d = weight_3d / time_dim
 
     # Assign new params
-    conv3d.weight = Parameter(weight_3d)
+    conv3d.weight = torch.nn.Parameter(torch.Tensor(weight_3d))
     conv3d.bias = conv2d.bias
     return conv3d
 
@@ -44,8 +46,8 @@ def inflate_linear(linear2d, time_dim):
     weight3d = linear2d.weight.data.repeat(1, time_dim)
     weight3d = weight3d / time_dim
 
-    linear3d.weight = Parameter(weight3d)
-    linear3d.bias = linear2d.bias
+    linear3d.weight = torch.nn.Parameter(torch.Tensor(weight3d))
+    linear3d.bias = torch.nn.Parameter(torch.Tensor(linear2d.bias))
     return linear3d
 
 
