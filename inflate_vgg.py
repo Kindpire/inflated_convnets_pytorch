@@ -91,8 +91,8 @@ if __name__ == "__main__":
     parser.add_argument(
         '--vgg_nb',
         type=int,
-        default=50,
-        help='What version of vgg to use, in [50|101|152]')
+        default=16,
+        help='What version of vgg to use, in [16]')
     parser.add_argument(
         '--display_samples',
         action='store_true',
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--frame_nb',
         type=int,
-        default='16',
+        default='4',# what if less than 8? actually for vgg16 bigger than 4 will explod the CUDA memory of 1080ti
         help='Number of video_frames to use (should be a multiple of 8)')
     args = parser.parse_args()
     run_inflater(args)
