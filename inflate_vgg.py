@@ -28,7 +28,7 @@ def run_inflater(args):
     imagenet_classes = [class_idx[str(k)][1] for k in range(len(class_idx))]
 
     if args.vgg_nb == 16:
-        vgg = torchvision.models.vgg16(pretrained=True)
+        vgg = torchvision.models.vgg16_bn(pretrained=True)
     else:
         raise ValueError('vgg_nb should be in [16] but got {}'
                          ).format(args.vgg_nb)

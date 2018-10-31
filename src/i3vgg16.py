@@ -6,14 +6,14 @@ from torch.nn import ReplicationPad3d
 from src import inflate
 
 
-class I3vgg(torch.nn.Module):
+class I3vgg16(torch.nn.Module):
     def __init__(self, vgg2d, frame_nb=16, class_nb=1000, conv_class=False):
         """
         Args:
             conv_class: Whether to use convolutional layer as classifier to
                 adapt to various number of frames
         """
-        super(I3vgg, self).__init__()
+        super(I3vgg16, self).__init__()
         
         # lookup = {'conv1_1':'0', 'conv1_2':'2', 'conv2_1':'5', 'conv2_2':'7', 
         #           'conv3_1':'10', 'conv3_2':'12', 'conv3_3':'14', 

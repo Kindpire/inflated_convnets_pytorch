@@ -8,7 +8,7 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
-from src.i3vgg import I3vgg
+from src.i3vgg16 import I3vgg16
 
 
 # To profile uncomment @profile and run `kernprof -lv inflate_vgg.py`
@@ -34,7 +34,7 @@ def run_inflater(args):
                          ).format(args.vgg_nb)
 
     loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=False)
-    i3vgg = I3vgg(copy.deepcopy(vgg), args.frame_nb)
+    i3vgg = I3vgg16(copy.deepcopy(vgg), args.frame_nb)
     i3vgg.train()
     i3vgg.cuda()
     vgg.cuda()
