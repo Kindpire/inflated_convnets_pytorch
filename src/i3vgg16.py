@@ -23,10 +23,8 @@ class I3vgg(torch.nn.Module):
 
         self.conv1_1 = inflate.inflate_conv(
             vgg2d.features[0], time_dim=3, time_padding=1, center=True)
-        self.bn1 = inflate.inflate_batch_norm(vgg2d.features[1])
         self.conv1_2 = inflate.inflate_conv(
-            vgg2d.features[3], time_dim=3, time_padding=1, center=True)
-        self.bn2 = inflate.inflate_batch_norm(vgg2d.features[4])       
+            vgg2d.features[2], time_dim=3, time_padding=1, center=True)       
         self.maxpool_1 = inflate.inflate_pool(
             vgg2d.features[4], time_dim=3, time_padding=1, time_stride=2)
         self.conv2_1 = inflate.inflate_conv(
