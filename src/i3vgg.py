@@ -3,6 +3,9 @@ import math
 import torch
 from torch.nn import ReplicationPad3d
 
+from src import inflate
+
+
 class I3vgg(torch.nn.Module):
     def __init__(self, vgg2d, frame_nb=16, class_nb=1000, conv_class=False):
         """
@@ -18,47 +21,47 @@ class I3vgg(torch.nn.Module):
         #           'conv5_1':'24', 'conv5_2':'26', 'conv5_3':'28',
         #           'conv6':'31', 'conv7':'33'}
 
-        self.conv1_1 = inflate_conv(
+        self.conv1_1 = inflate.inflate_conv(
             vgg2d.features[0], time_dim=3, time_padding=1, center=True)
-        self.conv1_2 = inflate_conv(
+        self.conv1_2 = inflate.inflate_conv(
             vgg2d.features[2], time_dim=3, time_padding=1, center=True)       
-        self.maxpool_1 = inflate_pool(
+        self.maxpool_1 = inflate.inflate_pool(
             vgg2d.features[4], time_dim=3, time_padding=1, time_stride=2)
-        self.conv2_1 = inflate_conv(
+        self.conv2_1 = inflate.inflate_conv(
             vgg2d.features[5], time_dim=3, time_padding=1, center=True)       
-        self.conv2_2 = inflate_conv(
+        self.conv2_2 = inflate.inflate_conv(
             vgg2d.features[7], time_dim=3, time_padding=1, center=True)        
-        self.maxpool_2 = inflate_pool(
+        self.maxpool_2 = inflate.inflate_pool(
             vgg2d.features[9], time_dim=3, time_padding=1, time_stride=2)
-        self.conv3_1 = inflate_conv(
+        self.conv3_1 = inflate.inflate_conv(
             vgg2d.features[10], time_dim=3, time_padding=1, center=True)        
-        self.conv3_2 = inflate_conv(
+        self.conv3_2 = inflate.inflate_conv(
             vgg2d.features[12], time_dim=3, time_padding=1, center=True)       
-        self.conv3_3 = inflate_conv(
+        self.conv3_3 = inflate.inflate_conv(
             vgg2d.features[14], time_dim=3, time_padding=1, center=True)        
-        self.maxpool_3 = inflate_pool(
+        self.maxpool_3 = inflate.inflate_pool(
             vgg2d.features[16], time_dim=3, time_padding=1, time_stride=2)
-        self.conv4_1 = inflate_conv(
+        self.conv4_1 = inflate.inflate_conv(
             vgg2d.features[17], time_dim=3, time_padding=1, center=True)       
-        self.conv4_2 = inflate_conv(
+        self.conv4_2 = inflate.inflate_conv(
             vgg2d.features[19], time_dim=3, time_padding=1, center=True)       
-        self.conv4_3 = inflate_conv(
+        self.conv4_3 = inflate.inflate_conv(
             vgg2d.features[21], time_dim=3, time_padding=1, center=True)        
-        self.maxpool_4 = inflate_pool(
+        self.maxpool_4 = inflate.inflate_pool(
             vgg2d.features[23], time_dim=3, time_padding=1, time_stride=2)
-        self.conv5_1 = inflate_conv(
+        self.conv5_1 = inflate.inflate_conv(
             vgg2d.features[24], time_dim=3, time_padding=1, center=True)        
-        self.conv5_2 = inflate_conv(
+        self.conv5_2 = inflate.inflate_conv(
             vgg2d.features[26], time_dim=3, time_padding=1, center=True)        
-        self.conv5_3 = inflate_conv(
+        self.conv5_3 = inflate.inflate_conv(
             vgg2d.features[28], time_dim=3, time_padding=1, center=True)        
-        self.maxpool_5 = inflate_pool(
+        self.maxpool_5 = inflate.inflate_pool(
             vgg2d.features[30], time_dim=3, time_padding=1, time_stride=2)
-        self.fc1 = inflate_linear(vgg2d.classifier[0], 1)
+        self.fc1 = inflate.inflate_linear(vgg2d.classifier[0], 1)
         
-        self.fc2 = inflate_linear(vgg2d.classifier[3], 1)
+        self.fc2 = inflate.inflate_linear(vgg2d.classifier[3], 1)
         
-        self.fc3 = inflate_linear(vgg2d.classifier[6], 1)
+        self.fc3 = inflate.inflate_linear(vgg2d.classifier[6], 1)
         
         self.relu = torch.nn.ReLU(inplace=True)
         
