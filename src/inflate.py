@@ -32,8 +32,9 @@ def inflate_conv(conv2d,
 
     # Assign new params
     conv3d.weight = torch.nn.Parameter(torch.Tensor(weight_3d))
-    print('bias', conv2d.bias)
-    conv3d.bias = torch.nn.Parameter(torch.Tensor(conv2d.bias))
+    #print('bias', conv2d.bias, type(conv2d.bias))
+    if (conv2d.bias is not None):# and (len(conv2d.bias)):
+        conv3d.bias = torch.nn.Parameter(torch.Tensor(conv2d.bias))
     return conv3d
 
 
