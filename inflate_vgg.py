@@ -8,7 +8,7 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
-from src.i3res import I3vgg
+from src.i3vgg import I3vgg
 
 
 # To profile uncomment @profile and run `kernprof -lv inflate_vgg.py`
