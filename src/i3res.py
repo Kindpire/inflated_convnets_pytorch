@@ -59,7 +59,9 @@ class I3ResNet(torch.nn.Module):
             x = x.squeeze(3)
             x = x.mean(2)
         else:
+            print(x.shape)
             x = self.avgpool(x)
+            print(x.shape)
             x_reshape = x.view(x.size(0), -1)
             x = self.fc(x_reshape)
         return x

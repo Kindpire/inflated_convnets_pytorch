@@ -32,18 +32,29 @@ def run_inflater(args):
     else:
         raise ValueError('vgg_nb should be in [16] but got {}'
                          ).format(args.vgg_nb)
-
+    #vgg_feature_module = list(vgg.features)
+    #vgg_class_module = list(vgg.classifier)
+    #vgg_feature_net = torch.nn.Sequential(*vgg_feature_module)
+    #vgg_class_net = torch.nn.Sequential(*vgg_class_module)
     loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=False)
     i3vgg = I3vgg(copy.deepcopy(vgg), args.frame_nb)
-    i3vgg.train()
+    i3vgg.eval()
     i3vgg.cuda()
+    vgg.eval()
     vgg.cuda()
+    #vgg_feature_net.eval()
+    #vgg_feature_net.cuda()
+    #vgg_class_net.eval()
+    #vgg_class_net.cuda()
 
     for i, (input_2d, target) in enumerate(loader):
         target = target.cuda()
         target_var = torch.autograd.Variable(target)
         input_2d_var = torch.autograd.Variable(input_2d.cuda())
 
+        #out2d = vgg_feature_net(input_2d_var)
+        #out2d = out2d.view(out2d.size(0), -1)
+        #out2d = vgg_class_net(out2d)
         out2d = vgg(input_2d_var)
         out2d = out2d.cpu().data
 
@@ -52,7 +63,7 @@ def run_inflater(args):
 
         out3d = i3vgg(input_3d_var)
         out3d = out3d.cpu().data
-
+        print(out2d.shape, out3d.shape)
         out_diff = out2d - out3d
         print('mean abs error {}'.format(out_diff.abs().mean()))
         print('mean abs val {}'.format(out2d.abs().mean()))

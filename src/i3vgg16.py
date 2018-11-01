@@ -58,9 +58,7 @@ class I3vgg16(torch.nn.Module):
         self.maxpool_5 = inflate.inflate_pool(
             vgg2d.features[30], time_dim=3, time_padding=1, time_stride=2)
         self.fc1 = inflate.inflate_linear(vgg2d.classifier[0], 1)
-        
         self.fc2 = inflate.inflate_linear(vgg2d.classifier[3], 1)
-        
         self.fc3 = inflate.inflate_linear(vgg2d.classifier[6], 1)
         
         self.relu = torch.nn.ReLU(inplace=True)
